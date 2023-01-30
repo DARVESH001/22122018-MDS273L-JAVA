@@ -12,6 +12,7 @@ Identify if the employee belongs to the top MNC Companies (Facebook, Google, Mic
 
 
 --------------------OUTPUT-------------------------
+  
 Enter the username: darvesh
 
 Enter the gender(m/f): m
