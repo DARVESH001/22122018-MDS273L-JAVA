@@ -33,10 +33,17 @@ Age : 22
 Region of Employee: Uttar Pradesh
 
 Company name of Employee: apple
+  
 ***********************************************************************
+  
 MALE
+  
 -------------------------------------------------------------------------------------------------
+  
 The employee is working in Top MNC Companies
+  
 ----------------------------------------------------------------------------------------------
+  
 The Employee is from the Northern states of India; Preferable work location is in Uttar Pradesh.
+  
 ----------------------------------------------------------------------------------------------
