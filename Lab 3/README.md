@@ -19,3 +19,50 @@ Four functions inside your lab program class including your main class
 One static String array storing the names (note the program can store up to 1024 students)
 One two-dimensional string array storing the details of up to 1024 students
 A menu-driven main method implementing the functions and functionality
+---------------------------------OUTPUT------------------------------------------------------------------------------------------
+
+1. Add The Student Name: 
+2. View Student Details:
+3. Search Student Details:
+4. Exit !
+Enter your choice: 1
+Enter student name: darvesh
+Enter student register number: 22122018
+Enter student email: darvesh@gmail.com
+Enter student class: 2msds-a
+Enter student department: ds
+Student details added successfully!
+1. Add The Student Name:
+2. View Student Details:
+3. Search Student Details:
+4. Exit !
+Enter your choice: 1
+Enter student name: ashish
+Enter student register number: 22122034
+Enter student email: as@gmail.com
+Enter student class: msds-a
+Enter student department: ds1
+Student details added successfully!
+1. Add The Student Name:
+2. View Student Details:
+3. Search Student Details:
+4. Exit !
+Enter your choice: 3
+Enter student name to view details: vignesh
+Student name not found!
+1. Add The Student Name:
+2. View Student Details:
+3. Search Student Details:
+4. Exit !
+Enter your choice: 3
+Enter student name to view details: darvesh
+Name: darvesh
+Register Number: 22122018
+Email: darvesh@gmail.com
+Class: 2msds-a
+Department: ds
+1. Add The Student Name:
+2. View Student Details:
+3. Search Student Details:
+4. Exit !
+Enter your choice: 4
