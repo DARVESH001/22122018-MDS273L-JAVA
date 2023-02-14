@@ -78,18 +78,26 @@ public class Lab_3 {
   }
   static void namesearch(){
     Scanner input = new Scanner(System.in);
-    System.out.print("search the register number here: ");
-    String studentNames=input.next();
-    boolean isFound = false;
-    for(int i =0;i<studentNames.length();i++){
-        if(studentDetails[i].equals(studentDetails[numOfStudents][0])){
-            System.out.println("student name is at "+(i+1));
-            isFound=true;
-            break;
-        }
+    
+    System.out.print("Enter student name to search details: ");
+    String name = input.nextLine();
+    
+    int index = -1;
+    for (int i = 0; i < studentNames.length; i++) {
+      if (studentNames[i] != null && studentNames[i].equals(name)) {
+        index = i;
+        break;
+      }
     }
-    if(!isFound){
-        System.out.println("Name not found !");
+    
+    if (index != -1) {
+      System.out.println("Name: " + studentNames[index]);
+      System.out.println("Register Number: " + studentDetails[index][0]);
+      System.out.println("Email: " + studentDetails[index][1]);
+      System.out.println("Class: " + studentDetails[index][2]);
+      System.out.println("Department: " + studentDetails[index][3]);
+    } else {
+      System.out.println("Student name not found!");
     }
 }
 }
