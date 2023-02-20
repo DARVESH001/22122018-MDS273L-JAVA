@@ -7,8 +7,9 @@ public class Lab_4 {
     static int acc_n;
     static String acc_name;
     static float acc_bal;
+    static ArrayList<String> tran = new ArrayList<String>();
     public static void main(String[] args) {
-        ArrayList<String> tran = new ArrayList<String>();
+        
         Scanner sc = new Scanner(System.in);
 
         initialize(sc);
@@ -18,8 +19,8 @@ public class Lab_4 {
             System.out.println("\nMenu:");
             System.out.println("1. Deposit Money");
             System.out.println("2. Withdraw Money");
-            System.out.println("3. Print Transactions");
-            System.out.println("4. Print Account Summary");
+            System.out.println("3. Transactions");
+            System.out.println("4. Account Summary");
             System.out.println("5. Exit");
             System.out.print("Enter your choice: ");
 
@@ -49,7 +50,7 @@ public class Lab_4 {
         sc.close();
     }    
         public static void initialize(Scanner sc){
-            ArrayList<String> tran = new ArrayList<String>();
+            
             System.out.print("Enter account number: ");
             acc_n=sc.nextInt();
             System.out.print("Enter account holder name: ");
@@ -63,14 +64,14 @@ public class Lab_4 {
             tran.add(String.format("Account initialized with balance: %.2f", acc_bal));
         }
         public static void Transactions() {
-            ArrayList<String> tran = new ArrayList<String>();
+           
             System.out.println("Transactions:");
-            for (String tran : tran) {
-                System.out.println(tran);
+            for (String t : tran) {
+                System.out.println(t);
             }
         }
         static void deposit(Scanner sc){
-            ArrayList<String> tran = new ArrayList<String>();
+            
             System.out.println("Enter the amount to deposit: ");
             float depo=sc.nextFloat();
             acc_bal=acc_bal+depo;
@@ -79,13 +80,18 @@ public class Lab_4 {
             tran.add(String.format("New balance: %.2f", acc_bal));
         }
         static void withdraw(Scanner sc){
-            ArrayList<String> tran = new ArrayList<String>();
+            
             System.out.println("Enter the amount to withdraw: ");
             float with=sc.nextFloat();
-            acc_bal=acc_bal-with;
-            System.out.println("withdraw sucessfull! \nAccount balance is "+acc_bal);
-            tran.add(String.format("Withdrawal: %.2f", with));
-            tran.add(String.format("New balance: %.2f", acc_bal));
+            if(acc_bal>with || acc_bal<=0){
+                acc_bal=acc_bal-with;
+                System.out.println("withdraw sucessfull! \nAccount balance is "+acc_bal);
+                tran.add(String.format("Withdrawal: %.2f", with));
+                tran.add(String.format("New balance: %.2f", acc_bal));
+            }else{
+                System.out.println("insufficient balance!");
+            }
+            
         }
 
         public static void Acc_Summary() {
