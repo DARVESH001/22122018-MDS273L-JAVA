@@ -30,6 +30,7 @@ To withdraw money
 To print the transactions
 
 To print account summary
+
 ----------------------------------------------------------OUTPUT-------------------------------------------------------------------------
 
 Enter account number: 23456
