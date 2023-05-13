@@ -1,116 +1,179 @@
-package Lab_7;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.File;
+import java.util.Arrays;
 
-
+import java.util.Scanner;
 public class Lab_7 {
     public static void main(String[] args) {
-        String csvFile = "Iris.csv";
-        String line = "";
-        String csvSplitBy = ",";
-        Map<String, List<Double>> data = new HashMap<String, List<Double>>();
-        List<String> species = new ArrayList<String>();
+        File iris = new File("Iris.csv");
+        try {
 
-        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
-            while ((line = br.readLine()) != null) {
-                String[] values = line.split(csvSplitBy);
-                String speciesName = values[4];
-                species.add(speciesName);
-                for (int i = 0; i < 4; i++) {
-                    double value = Double.parseDouble(values[i]);
-                    String attributeName = "Attribute " + (i+1);
-                    if (data.containsKey(attributeName)) {
-                        data.get(attributeName).add(value);
-                    } else {
-                        List<Double> valuesList = new ArrayList<Double>();
-                        valuesList.add(value);
-                        data.put(attributeName, valuesList);
-                    }
+            if (iris.exists()) {
+                System.out.println("file exist......");
+
+            } else {
+                System.out.println("file not exist........");
+                if (iris.createNewFile()) {
+                    System.out.println("file created........");
+
+                } else {
+                    System.out.println("file creation error........");
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            // TO DO: handle exception
+            System.out.println("Error..." + e);
         }
 
-        System.out.println("Overall Summary Statistics:");
-        for (Map.Entry<String, List<Double>> entry : data.entrySet()) {
-            String attributeName = entry.getKey();
-            List<Double> valuesList = entry.getValue();
-            double mean = calculateMean(valuesList);
-            double median = calculateMedian(valuesList);
-            double mode = calculateMode(valuesList);
-            double min = Collections.min(valuesList);
-            double max = Collections.max(valuesList);
-            System.out.println(attributeName + ":");
-            System.out.println("\tMean = " + mean);
-            System.out.println("\tMedian = " + median);
-            System.out.println("\tMode = " + mode);
-            System.out.println("\tMin = " + min);
-            System.out.println("\tMax = " + max);
-        }
+        try {
+            Scanner scanfile = new Scanner(iris);
 
-        System.out.println("\nSummary Statistics by Species:");
-        for (String s : species.stream().distinct().toArray(String[]::new)) {
-            System.out.println(s + ":");
-            for (Map.Entry<String, List<Double>> entry : data.entrySet()) {
-                String attributeName = entry.getKey();
-                List<Double> valuesList = entry.getValue();
-                List<Double> speciesValues = new ArrayList<Double>();
-                for (int i = 0; i < valuesList.size(); i++) {
-                    if (species.get(i).equals(s)) {
-                        speciesValues.add(valuesList.get(i));
-                    }
-                }
-                double mean = calculateMean(speciesValues);
-                double median = calculateMedian(speciesValues);
-                double mode = calculateMode(speciesValues);
-                double min = Collections.min(speciesValues);
-                double max = Collections.max(speciesValues);
-                System.out.println("\t" + attributeName + ":");
-                System.out.println("\t\tMean = " + mean);
-                System.out.println("\t\tMedian = " + median);
-                System.out.println("\t\tMode = " + mode);
-                System.out.println("\t\tMin = " + min);
-                System.out.println("\t\tMax = " + max);
+            String[] alldata = new String[1024];
+            int y = 0;
+            while (scanfile.hasNextLine()) {
+                alldata[y] = scanfile.nextLine();// store all data in single variable
+                y = y + 1;
             }
+            int c = 1;
+            for (int i = 1; i < alldata.length - 1; i++) {
+                if (alldata[i] != null) {
+                    c = c + 1; // split data and store in array
+                }
+
+            }
+            String[][] raw = new String[c][6];
+
+            for (int i = 0; i < raw.length; i++) {
+                if (alldata[i] != null) {
+                    raw[i] = alldata[i].split(","); // split data and store in array
+                }
+
+            }
+            opration(raw);
+            // callin g function
+
+        } catch (Exception e) {
+            // TO DO: handle exception
+            System.out.println("Error..." + e);
         }
     }
 
-    private static double calculateMean(List<Double> values) {
-        double sum = 0;
-        for (double value : values) {
-            sum += value;
+    static void opration(String[][] data) {
+        String[][] min = new String[6][2];
+        String[][] max = new String[6][2];
+        String[][] mean = new String[6][2];
+        String[][] median = new String[6][2];
+        String[][] sumof = new String[6][2];
+        String[][] mode = new String[6][2];
+
+        sumof[0][0] = min[0][0] = max[0][0] = mean[0][0] = data[0][0];
+        sumof[1][0] = min[1][0] = max[1][0] = mean[1][0] = data[0][1];
+        sumof[2][0] = min[2][0] = max[2][0] = mean[2][0] = data[0][2];
+        sumof[3][0] = min[3][0] = max[3][0] = mean[3][0] = data[0][3];
+        sumof[4][0] = min[4][0] = max[4][0] = mean[4][0] = data[0][4];
+        sumof[5][0] = min[5][0] = max[5][0] = mean[5][0] = data[0][5];
+        System.out.println("Summary\t\t"+"Mean\t"+"Median\t"+"Mode\t"+"Min\t"+"Max\t");
+        for (int i = 1; i < (max.length - 1); i++) {
+            sumof[i][1] = "0";
+            max[i][1] = String.valueOf(data[1][1]);
+            min[i][1] = String.valueOf(data[1][1]);
+            median[i][1] = Median(data, i);
+            mean[i][1]= Mean(data, i);
+            mode[i][1]= mode(data, i);
+            if (i >= 1) {
+                for (int j = 1; j < (data.length - 1); j++) {
+                    Double a = Double.parseDouble(sumof[i][1]) + Double.parseDouble(data[j][i]);
+                    max[i][1] = max(Double.parseDouble(data[j][i]), Double.parseDouble(max[i][1]));
+                    min[i][1] = min(Double.parseDouble(data[j][i]), Double.parseDouble(min[i][1]));
+
+                    sumof[i][1] = Double.toString(a);
+                }
+            }
+            System.out.print(sumof[i][0] + "\t");
+
+            System.out.print(String.format("%.4f", Double.parseDouble(mean[i][1])) + "\t");
+            System.out.print(String.format("%.4f", Double.parseDouble(median[i][1])) + "\t");
+            System.out.print(String.format("%.4f", Double.parseDouble(mode[i][1])) + "\t");
+            System.out.print(String.format("%.4f", Double.parseDouble(min[i][1])) + "\t");
+            System.out.println(String.format("%.4f", Double.parseDouble(max[i][1])) + "\t");
         }
-        return sum / values.size();
+
     }
 
-    private static double calculateMedian(List<Double> values) {
-        Collections.sort(values);
-        return 0;
-    
+    static String max(double data, double x) {
+        double temp = data;
+        if (temp > x) {
+            x = temp;
+        }
+        String a = String.valueOf(x);
+        return a;
     }
 
-        private static double calculateMode(List<Double> values) {
-        Map<Double, Integer> countMap = new HashMap<Double, Integer>();
-        int maxCount = 0;
-        double mode = 0;
-        for (double value : values) {
-            int count = countMap.getOrDefault(value, 0) + 1;
-            countMap.put(value, count);
+    static String min(double data, double x) {
+        double temp = data;
+        if (temp < x) {
+            x = temp;
+        }
+        String a = String.valueOf(x);
+        return a;
+    }
+
+    static String Median(String[][] data, int i) {
+        float[] nd = new float[data.length - 1];
+        for (int x = 1; x < data.length; x++) {
+            nd[x - 1] = Float.parseFloat(data[x][i]);
+        }
+        Arrays.sort(nd);
+        float md;
+        if (nd.length % 2 == 0) {
+            md = (nd[(nd.length + 1) / 2]);
+        } else {
+            md = (nd[nd.length / 2] + nd[(nd.length / 2) + 1]) / 2;
+        }
+
+        String a = String.valueOf(md);
+        return a;
+    }
+
+    static String Mean(String[][] data, int i) {
+        float[] nd = new float[data.length - 1];
+        for (int x = 1; x < data.length; x++) {
+            nd[x - 1] = Float.parseFloat(data[x][i]);
+        }
+
+        float md = 0;
+        for (int x = 0; x < nd.length; x++) {
+            md = md + nd[x];
+        }
+        md = md / nd.length;
+        String a = String.valueOf(md);
+
+        return a;
+    }
+
+    public static String mode(String[][] data,int a) {
+        float[] arr = new float[data.length - 1];
+        for (int x = 1; x < data.length; x++) {
+            arr[x - 1] = Float.parseFloat(data[x][a]);
+        }
+        int maxCount = 0, count = 0;
+        Float value, mode = 0.0f;
+
+        for (int i = 0; i < arr.length; i++) {
+
+            value = arr[i];
+            for (int j = 0; j < arr.length; j++) {
+                if (value == arr[j]) {
+                    count++;
+                }
+            }
             if (count > maxCount) {
-                maxCount = count;
                 mode = value;
+                count = maxCount;
             }
         }
-        return mode;
+        String b = String.valueOf(mode);
+
+        return b;
     }
-    
 }
-    
-}
+
