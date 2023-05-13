@@ -6,7 +6,7 @@ Once the overall summary statistics have been calculated, identify the summary s
 
 Present your results in the appropriate format and write the results in a file.
 
-===============================================================OUTPUT======================================================================
+======================================OUTPUT=====================================================
 
 file exist......
 
